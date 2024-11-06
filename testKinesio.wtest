@@ -1,13 +1,12 @@
 import kinesiologia.*
-
-
-describe "Test para parte 1" {
-  const leonardo = new Paciente(edad = 40, dolor = 10, fortaleza = 20)
-  const milena = new Paciente(edad = 3, dolor = 30, fortaleza = 50)
+  const leonardo = new Paciente(edad = 40, dolor = 10, fortaleza = 20, rutina = [bicicleta, minitramp, bicicleta, magneto])
+  const milena = new Paciente(edad = 3, dolor = 30, fortaleza = 50, rutina = [magneto, bicicleta])
+  const ger = new Paciente(edad = 26, fortaleza = 60, dolor = 10, rutina = [])
 
   const magneto = new Magneto()
   const bicicleta = new Bicicleta()
   const minitramp = new Minitramp()
+describe "Test para parte 1" {
   test "Leonardo puede usar los 3 aparatos y Milena solo el magneto" {
     assert.that(magneto.puedeSerUsado(leonardo))
     assert.that(bicicleta.puedeSerUsado(leonardo))
@@ -33,5 +32,21 @@ describe "Test para parte 1" {
   test "la fortaleza de leonardo sube a 24 al usar el minitrap" {
     minitramp.utilizar(leonardo)
     assert.equals(24, leonardo.fortaleza())
+  }
+}
+
+describe "Test parte 2" {
+  test "Leonardo puede hacer su rutina" {
+    leonardo.realizarRutina()
+    assert.that(leonardo.puedeRealizarRutina())
+    assert.equals(1.8, leonardo.dolor())
+    assert.equals(30, leonardo.fortaleza())
+  }
+  test "Milena no puede ahcer su rutina" {
+    assert.notThat(milena.puedeRealizarRutina())
+  }
+  test "Ger no puede hacer rutina y tira exception" {
+    assert.throwsExceptionWithType(new DomineException, ger.realizarRutina())(new, block)
+    assert.throwsException({ ger.realizarRutina() })
   }
 }
