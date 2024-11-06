@@ -1,0 +1,37 @@
+import kinesiologia.*
+
+
+describe "Test para parte 1" {
+  const leonardo = new Paciente(edad = 40, dolor = 10, fortaleza = 20)
+  const milena = new Paciente(edad = 3, dolor = 30, fortaleza = 50)
+
+  const magneto = new Magneto()
+  const bicicleta = new Bicicleta()
+  const minitramp = new Minitramp()
+  test "Leonardo puede usar los 3 aparatos y Milena solo el magneto" {
+    assert.that(magneto.puedeSerUsado(leonardo))
+    assert.that(bicicleta.puedeSerUsado(leonardo))
+    assert.that(minitramp.puedeSerUsado(leonardo))
+    assert.that(magneto.puedeSerUsado(milena))
+    assert.notThat(bicicleta.puedeSerUsado(milena))
+    assert.notThat(minitramp.puedeSerUsado(milena))
+  }
+
+  test "El nivel de dolor de Leonardo baja a 9 luego de usar el magneto" {
+    magneto.utilizar(leonardo)
+    assert.equals(9, leonardo.dolor())
+  }
+  test "El nivel de dolor de Milena baja a 27 luego de usar el magneto" {
+    magneto.utilizar(milena)
+    assert.equals(27, milena.dolor())
+  }
+  test "El dolor de Leonardo baja a 6 y su fortaleza sube a 23 luego de usar la bicicleta" {
+    bicicleta.utilizar(leonardo)
+    assert.equals(6, leonardo.dolor())
+    assert.equals(23, leonardo.fortaleza())
+  }
+  test "la fortaleza de leonardo sube a 24 al usar el minitrap" {
+    minitramp.utilizar(leonardo)
+    assert.equals(24, leonardo.fortaleza())
+  }
+}
